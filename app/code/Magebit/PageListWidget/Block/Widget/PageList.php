@@ -6,7 +6,7 @@ use Magento\Cms\Api\PageRepositoryInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\View\Element\Template;
-use \Magento\Widget\Block\BlockInterface;
+use Magento\Widget\Block\BlockInterface;
 use Psr\Log\LoggerInterface;
 
 
@@ -24,16 +24,6 @@ class PageList extends Template implements BlockInterface
      * @var array
      */
     private array $data;
-
-    /**
-     * @var string|mixed
-     */
-    private string $displayMode;
-
-    /**
-     * @var array
-     */
-    private array $selectedPages;
 
     /**
      * @var SearchCriteriaBuilder
