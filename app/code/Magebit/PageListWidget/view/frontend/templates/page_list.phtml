@@ -4,7 +4,7 @@
  */
 
 ?>
-<?php $pages = $block->getSelectedCmsPages(); ?>
+<?php $pages = $block->getPages(); ?>
 
 <?php if (!$pages): ?>
     <?php return ?>
@@ -16,9 +16,7 @@
 <ul>
     <?php foreach ($pages as $page): ?>
         <li>
-            <a href="<?= $block->getUrl($page['identifier']) ?>">
-                <?= $page['title'] ?>
-            </a>
+            <a href="<?= $block->getUrl($page->getIdentifier()) ?>"><?= $page->getTitle() ?></a>
         </li>
     <?php endforeach; ?>
 </ul>

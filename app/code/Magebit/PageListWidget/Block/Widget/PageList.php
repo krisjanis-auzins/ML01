@@ -26,6 +26,11 @@ class PageList extends Template implements BlockInterface
     private array $data;
 
     /**
+     * @var \Magento\Cms\Api\Data\PageInterface[]
+     */
+    protected array $pages = [];
+
+    /**
      * @var SearchCriteriaBuilder
      */
     private SearchCriteriaBuilder $searchCriteriaBuilder;
@@ -74,9 +79,11 @@ class PageList extends Template implements BlockInterface
      *
      * @return array
      */
-    public function getSelectedCmsPages(): array
+    public function getPages(): array
     {
-        $selectedPages = [];
+        if (!empty($this->pages)) {
+            return $this->pages;
+        }
 
         if ($this->data['display_mode'] === self::SPECIFIC_PAGES) {
             $pageIdentifiers = explode(',', $this->data['selected_pages']);
@@ -86,19 +93,11 @@ class PageList extends Template implements BlockInterface
         $searchCriteria = $this->searchCriteriaBuilder->create();
 
         try {
-            $pageCollection = $this->pageRepository->getList($searchCriteria)->getItems();
+            $this->pages = $this->pageRepository->getList($searchCriteria)->getItems();
         } catch (LocalizedException $e) {
             $this->logger->error($e->getMessage());
-            return [];
         }
 
-        foreach ($pageCollection as $page) {
-            $selectedPages[] = [
-                'title' => $page->getTitle(),
-                'identifier' => $page->getIdentifier()
-            ];
-        }
-
-        return $selectedPages;
+        return $this->pages;
     }
 }
