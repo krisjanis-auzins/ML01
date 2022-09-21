@@ -8,10 +8,10 @@ define([
         },
 
         initialize: function (config) {
-            this._super();
             this.qty = ko.observable(parseInt(config.productDefaultQty));
             this.maxQty = config.maxQty;
             this.dataValidate = config.dataValidate;
+            return this._super();
         },
 
         increaseQty: function() {
@@ -23,7 +23,7 @@ define([
 
         decreaseQty: function() {
             const currentQty = this.qty();
-            if(currentQty > 0){
+            if(currentQty > 1){
                 this.qty(currentQty - 1);
             }
         },
