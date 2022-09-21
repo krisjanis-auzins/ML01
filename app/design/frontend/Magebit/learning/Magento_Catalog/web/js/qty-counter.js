@@ -2,17 +2,30 @@ define([
     'uiComponent',
     'ko'
 ], function(Component, ko){
-    console.log('The javascript works!')
-
-    const component = Component.extend({
+    return Component.extend({
         defaults: {
-            template: 'Magento_Catalog/input-counter'
+            template: "Magento_Catalog/input-counter"
         },
+
         initialize: function (config) {
             this._super();
-            console.log(config);
-        }
-    });
+            this.qty = ko.observable(parseInt(config.productDefaultQty));
+            this.maxQty = config.maxQty;
+            this.dataValidate = config.dataValidate;
+        },
 
-    return component;
+        increaseQty: function() {
+            const currentQty = this.qty();
+            if(currentQty < this.maxQty){
+                this.qty(currentQty + 1);
+            }
+        },
+
+        decreaseQty: function() {
+            const currentQty = this.qty();
+            if(currentQty > 0){
+                this.qty(currentQty - 1);
+            }
+        },
+    })
 })
