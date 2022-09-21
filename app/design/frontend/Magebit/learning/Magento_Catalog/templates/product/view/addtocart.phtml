@@ -11,20 +11,8 @@
     <div class="box-tocart">
         <div class="fieldset">
             <?php if ($block->shouldRenderQuantity()) :?>
-                <div class="field qty">
-                    <div class="control">
-                        <button id="product-decrease-qty" type="button"><span></span></button>
-                        <input type="number"
-                               name="qty"
-                               id="qty"
-                               min="0"
-                               value="<?= $block->getProductDefaultQty() * 1 ?>"
-                               title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
-                               class="input-text qty"
-                               data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
-                        />
-                        <button id="product-increase-qty" type="button"><span></span></button>
-                    </div>
+                <div class="field qty" id="qty-counter-field" data-bind="scope: 'qty-counter'">
+                    <!-- ko template: getTemplate() --><!-- /ko -->
                 </div>
             <?php endif; ?>
 
@@ -62,6 +50,17 @@
     {
         "#product_addtocart_form": {
             "Magento_Catalog/js/validate-product": {}
+        },
+        "*": {
+            "Magento_Ui/js/core/app":{
+                "components": {
+                    "qty-counter": {
+                        "component": "Magento_Catalog/js/qty-counter",
+                        "productDefaultQty": "<?= $block->getProductDefaultQty() * 1 ?>",
+                        "dataValidate": "<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                    }
+                }
+            }
         }
     }
 </script>

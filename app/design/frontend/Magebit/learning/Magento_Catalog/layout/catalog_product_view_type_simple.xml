@@ -26,7 +26,7 @@
             </container>
         </referenceContainer>
 
-        <move element="product.info.upsell" destination="product.info.main" after="product.info.addtocart"/>
+        <move element="product.info.upsell" destination="product.info.main"/>
         <move element="product.attributes" destination="product.info.main" after="product.info.price"/>
         <move element="product.info.description" destination="product.info.main" before="product.attributes" after="product.info.price"/>
     </body>
