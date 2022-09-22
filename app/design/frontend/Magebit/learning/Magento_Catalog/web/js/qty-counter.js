@@ -29,31 +29,36 @@ define([
             }
         },
 
+        /**
+         * Validator for manual quantity input
+         */
         watchInput: function () {
+            /**
+             *  Initialization setup
+             */
+            this.inputElement = document.getElementById(this.inputElementId);
+            this.inputFocusedListener = inputFocused.bind(this);
+            this.inputElement.addEventListener('focusin', this.inputFocusedListener);
+
+            /**
+             *  Called on focusin event
+             */
             function inputFocused () {
-
-                console.log("input is focused");
-                console.log(this);
-
-                const currentQty = parseInt(this.inputElement.value);
-
-                console.log('current qty:' + currentQty + ', this.qty: ' + this.qty());
-
+                const currentQty = parseInt(this.inputElement.value); // Could be taken directly from observable this.qty() -> need to think about this (upon quick testing seemed like some bug happens, quantity jumps/skips)
                 this.validateRangeListener = validateRange.bind(this, currentQty)
-
                 this.inputElement.addEventListener("focusout", this.validateRangeListener);
                 this.inputElement.removeEventListener('focusin', this.inputFocusedListener);
             }
 
+            /**
+             * Called on focusout event
+             *
+             * @param oldQty
+             */
             function validateRange (oldQty) {
-
-                console.log("validating input");
-                console.log(this);
-                console.log('Old qty: ' + oldQty + ", qty: " + parseInt(this.qty()));
-
                 const currentQty = parseInt(this.inputElement.value);
 
-                if (currentQty < 1 || currentQty > this.maxQty) {
+                if (currentQty < 1 || currentQty > this.maxQty || !currentQty) {
                     this.qty(oldQty);
                 } else {
                     this.qty(currentQty);
@@ -62,13 +67,6 @@ define([
                 this.inputElement.addEventListener('focusin', this.inputFocusedListener)
                 this.inputElement.removeEventListener('focusout', this.validateRangeListener)
             }
-
-            console.log("watching input");
-            console.log(this);
-
-            this.inputElement = document.getElementById(this.inputElementId);
-            this.inputFocusedListener = inputFocused.bind(this);
-            this.inputElement.addEventListener('focusin', this.inputFocusedListener);
         },
     })
 })
