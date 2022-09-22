@@ -7,7 +7,7 @@
            value=""
            class="input-text qty"
            data-validate=""
-           data-bind="value: qty"
+           data-bind="value: qty, afterRender: watchInput"
     />
     <button id="product-increase-qty" type="button" data-bind="click: increaseQty "><span></span></button>
 </div>
