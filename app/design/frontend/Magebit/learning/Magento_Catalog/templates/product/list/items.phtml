@@ -197,7 +197,7 @@ $_item = null;
                     <ol class="products list items product-items">
                         <?php $count = 1; ?>
                         <?php foreach ($items as $_item):?>
-                            <?php if (($type == 'related' && $count > $itemCount) || ($type == 'upsell' && $count > $itemCount)) break;?>
+                            <?php if (($type === 'related' && $count > $itemCount) || ($type === 'upsell' && $count > $itemCount)) break;?>
                             <?php $available = ''; ?>
                             <?php if (!$_item->isComposite() && $_item->isSaleable() && $type == 'related'):?>
                                 <?php if (!$_item->getRequiredOptions()):?>
@@ -318,7 +318,7 @@ $_item = null;
                                         <?php // phpcs:enable ?>
                                     <?php endif; ?>
                                 </div>
-                                <?php if ($type == 'upsell'): ?>
+                                <?php if ($type === 'upsell'): ?>
                                     <a class="view-product-button-link" href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>">
                                         <button class="view-product-button" type="button">View Product</button>
                                     </a>

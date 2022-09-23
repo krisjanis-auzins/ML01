@@ -57,7 +57,6 @@
                     "qty-counter": {
                         "component": "qtyCounter",
                         "productDefaultQty": "<?= $block->getProductDefaultQty() * 1 ?>",
-                        "dataValidate": "<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>",
                         "maxQty": "<?= $_product->getExtensionAttributes()->getStockItem()->getQty(); ?>",
                         "inputElementId": "qty"
                     }

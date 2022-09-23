@@ -20,12 +20,12 @@ $_additional = $block->getAdditionalData();
 
 $_primaryAttributes = ['dimensions', 'color', 'material'];
 $_attributeRenderCount = 3;
-$_displayAttributes = $viewModel->getDisplayAttributes($_primaryAttributes, $_additional, $_attributeRenderCount);;
+$_displayAttributes = $viewModel->getDisplayAttributes($_primaryAttributes, $_additional, $_attributeRenderCount);
 ?>
-<?php if ($_displayAttributes) :?>
+<?php if ($_displayAttributes): ?>
     <div class="additional-attributes-wrapper table-wrapper">
         <ul class="data additional-attributes" id="product-attribute-specs-table">
-            <?php foreach ($_displayAttributes as $_data) :?>
+            <?php foreach ($_displayAttributes as $_data): ?>
                 <li>
                     <span class="col label" scope="row"><?= $block->escapeHtml($_data['label']) ?>: </span>
                     <span class="col data" data-th="<?= $block->escapeHtmlAttr($_data['label']) ?>"><?= /* @noEscape */ $_helper->productAttribute($_product, $_data['value'], $_data['code']) ?></span>
