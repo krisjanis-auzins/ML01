@@ -1,0 +1,68 @@
+<?php
+/**
+ * Magebit/learning
+ */
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php if ($_product->isSaleable()) :?>
+    <div class="box-tocart">
+        <div class="fieldset">
+            <?php if ($block->shouldRenderQuantity()) :?>
+                <div class="field qty" id="qty-counter-field" data-bind="scope: 'qty-counter'">
+                    <!-- ko template: getTemplate() --><!-- /ko -->
+                </div>
+            <?php endif; ?>
+
+            <?php if ($block->displayProductStockStatus()) :?>
+                <div class="stock-availability">
+                    <?php if ($_product->isAvailable()) :?>
+                        <div class="tick"></div>
+                        <div class="stock available" title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
+                            <span><?= $block->escapeHtml(__('In stock')) ?></span>
+                        </div>
+                        <div class="stock-item-count">
+                            <span><?= $_product->getExtensionAttributes()->getStockItem()->getQty(); ?> <?= __('items available')?></span>
+                        </div>
+                    <?php else :?>
+                        <div class="stock unavailable" title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
+                            <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
+            <div class="actions">
+                <button type="submit"
+                        title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
+                        class="action primary tocart"
+                        id="product-addtocart-button" disabled>
+                    <span><?= $block->escapeHtml($buttonTitle) ?></span>
+                </button>
+                <?= $block->getChildHtml('', true) ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/js/validate-product": {}
+        },
+         "#qty-counter-field": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "qty-counter": {
+                        "component": "qtyCounter",
+                        "productDefaultQty": "<?= $block->getProductDefaultQty() * 1 ?>",
+                        "dataValidate": "<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>",
+                        "maxQty": "<?= $_product->getExtensionAttributes()->getStockItem()->getQty(); ?>",
+                        "inputElementId": "qty"
+                    }
+                }
+            }
+        }
+    }
+</script>

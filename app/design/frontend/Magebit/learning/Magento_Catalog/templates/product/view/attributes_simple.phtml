@@ -1,0 +1,36 @@
+<?php
+/**
+ * Magebit/learning
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+
+/**
+ * Product additional attributes template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Attributes
+ * @var $viewModel \Magebit\AttributesFilter\ViewModel\AttributesFilter
+ */
+?>
+<?php
+$viewModel = $block->getData('viewModel');
+$_helper = $this->helper(Magento\Catalog\Helper\Output::class);
+$_product = $block->getProduct();
+$_additional = $block->getAdditionalData();
+
+$_primaryAttributes = ['dimensions', 'color', 'material'];
+$_attributeRenderCount = 3;
+$_displayAttributes = $viewModel->getDisplayAttributes($_primaryAttributes, $_additional, $_attributeRenderCount);;
+?>
+<?php if ($_displayAttributes) :?>
+    <div class="additional-attributes-wrapper table-wrapper">
+        <ul class="data additional-attributes" id="product-attribute-specs-table">
+            <?php foreach ($_displayAttributes as $_data) :?>
+                <li>
+                    <span class="col label" scope="row"><?= $block->escapeHtml($_data['label']) ?>: </span>
+                    <span class="col data" data-th="<?= $block->escapeHtmlAttr($_data['label']) ?>"><?= /* @noEscape */ $_helper->productAttribute($_product, $_data['value'], $_data['code']) ?></span>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif;?>
