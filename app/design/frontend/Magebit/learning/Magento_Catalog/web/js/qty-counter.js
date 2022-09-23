@@ -10,7 +10,6 @@ define([
         initialize: function (config) {
             this.qty = ko.observable(parseInt(config.productDefaultQty));
             this.maxQty = parseInt(config.maxQty);
-            this.dataValidate = config.dataValidate;
             this.inputElementId = config.inputElementId;
             this._super();
         },
@@ -37,7 +36,6 @@ define([
              *  Initialization setup
              */
             this.inputElement = document.getElementById(this.inputElementId);
-            this.inputElement.setAttribute('data-validate', this.dataValidate);
             this.inputFocusedListener = inputFocused.bind(this);
             this.inputElement.addEventListener('focusin', this.inputFocusedListener);
 
