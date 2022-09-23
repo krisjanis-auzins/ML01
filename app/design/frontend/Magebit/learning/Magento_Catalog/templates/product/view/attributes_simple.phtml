@@ -1,0 +1,47 @@
+<?php
+/**
+ * Magebit/learning
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+
+/**
+ * Product additional attributes template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Attributes
+ */
+?>
+<?php
+$_helper = $this->helper(Magento\Catalog\Helper\Output::class);
+$_product = $block->getProduct();
+$_additional = $block->getAdditionalData();
+$_primaryAttributes = ['dimensions', 'color', 'material'];
+$_attributeRenderCount = 3;
+$_displayAttributes = [];
+
+foreach ($_primaryAttributes as $_attributeCode) {
+    if (array_key_exists($_attributeCode, $_additional)) {
+        $_displayAttributes[$_attributeCode] = $_additional[$_attributeCode];
+    }
+}
+
+if (count($_displayAttributes) < $_attributeRenderCount) {
+    foreach ($_additional as $_attribute) {
+        if (!array_key_exists($_attribute['code'], $_displayAttributes) && count($_displayAttributes) < $_attributeRenderCount) {
+            $_displayAttributes[$_attribute['code']] = $_additional[$_attribute['code']];
+        }
+    }
+}
+?>
+<?php if ($_displayAttributes) :?>
+    <div class="additional-attributes-wrapper table-wrapper">
+        <ul class="data additional-attributes" id="product-attribute-specs-table">
+            <?php foreach ($_displayAttributes as $_data) :?>
+                <li>
+                    <span class="col label" scope="row"><?= $block->escapeHtml($_data['label']) ?>: </span>
+                    <span class="col data" data-th="<?= $block->escapeHtmlAttr($_data['label']) ?>"><?= /* @noEscape */ $_helper->productAttribute($_product, $_data['value'], $_data['code']) ?></span>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif;?>

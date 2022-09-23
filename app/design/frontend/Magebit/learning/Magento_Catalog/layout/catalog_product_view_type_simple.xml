@@ -16,16 +16,17 @@
             </container>
         </referenceContainer>
         <referenceBlock name="product.attributes" template="Magento_Catalog::product/view/attributes_simple.phtml" />
+        <referenceBlock name="product.info.description" template="Magento_Catalog::product/view/attribute_simple.phtml"/>
 
         <move element="product.info.upsell" destination="product.info.main"/>
         <move element="product.attributes" destination="product.info.main" after="product.info.price"/>
-        <move element="product.info.description" destination="product.info.main" before="product.attributes" after="product.info.price"/>
+        <move element="product.info.description" destination="product.info.main" before="product.info" after="product.info.price"/>
 
         <referenceContainer  name="product.info.stock.sku">
             <referenceContainer name="product.info.type" remove="true" />
         </referenceContainer>
         <referenceContainer name="product.info.social" remove="true" />
-        <referenceContainer name="product.info.details" remove="true" />
+        <referenceBlock name="product.info.details" remove="true" />
 
     </body>
 </page>
