@@ -9,29 +9,18 @@
  * Product additional attributes template
  *
  * @var $block \Magento\Catalog\Block\Product\View\Attributes
+ * @var $viewModel \Magebit\AttributesFilter\ViewModel\AttributesFilter
  */
 ?>
 <?php
+$viewModel = $block->getData('viewModel');
 $_helper = $this->helper(Magento\Catalog\Helper\Output::class);
 $_product = $block->getProduct();
 $_additional = $block->getAdditionalData();
+
 $_primaryAttributes = ['dimensions', 'color', 'material'];
 $_attributeRenderCount = 3;
-$_displayAttributes = [];
-
-foreach ($_primaryAttributes as $_attributeCode) {
-    if (array_key_exists($_attributeCode, $_additional)) {
-        $_displayAttributes[$_attributeCode] = $_additional[$_attributeCode];
-    }
-}
-
-if (count($_displayAttributes) < $_attributeRenderCount) {
-    foreach ($_additional as $_attribute) {
-        if (!array_key_exists($_attribute['code'], $_displayAttributes) && count($_displayAttributes) < $_attributeRenderCount) {
-            $_displayAttributes[$_attribute['code']] = $_additional[$_attribute['code']];
-        }
-    }
-}
+$_displayAttributes = $viewModel->getDisplayAttributes($_primaryAttributes, $_additional, $_attributeRenderCount);;
 ?>
 <?php if ($_displayAttributes) :?>
     <div class="additional-attributes-wrapper table-wrapper">

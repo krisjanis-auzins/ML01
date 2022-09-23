@@ -37,6 +37,7 @@ define([
              *  Initialization setup
              */
             this.inputElement = document.getElementById(this.inputElementId);
+            this.inputElement.setAttribute('data-validate', this.dataValidate);
             this.inputFocusedListener = inputFocused.bind(this);
             this.inputElement.addEventListener('focusin', this.inputFocusedListener);
 
@@ -44,8 +45,8 @@ define([
              *  Called on focusin event
              */
             function inputFocused () {
-                const currentQty = parseInt(this.inputElement.value); // Could be taken directly from observable this.qty() -> need to think about this (upon quick testing seemed like some bug happens, quantity jumps/skips)
-                this.validateRangeListener = validateRange.bind(this, currentQty)
+                const currentQty = parseInt(this.inputElement.value);
+                this.validateRangeListener = validateRange.bind(this, currentQty);
                 this.inputElement.addEventListener("focusout", this.validateRangeListener);
                 this.inputElement.removeEventListener('focusin', this.inputFocusedListener);
             }
@@ -64,8 +65,8 @@ define([
                     this.qty(currentQty);
                 }
 
-                this.inputElement.addEventListener('focusin', this.inputFocusedListener)
-                this.inputElement.removeEventListener('focusout', this.validateRangeListener)
+                this.inputElement.addEventListener('focusin', this.inputFocusedListener);
+                this.inputElement.removeEventListener('focusout', this.validateRangeListener);
             }
         },
     })
