@@ -1,0 +1,12 @@
+<?php
+/**
+ * Product additional attributes template
+ *
+ * @var $block \Magebit\Faq\Block\QuestionList
+ */
+$_questions = $block->getQuestions();
+?>
+<h3>Frequently Asked Questions</h3>
+<?php foreach ($_questions as $question): ?>
+    <strong><?= $question['question'] ?>: </strong><p><?= $question['answer'] ?></p>
+<?php endforeach; ?>

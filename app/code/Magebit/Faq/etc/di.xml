@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!--  Are these needed? Do not understand the purpose  -->
+    <virtualType name="moduleConfig" type="Magento\Core\Model\Config">
+        <arguments>
+            <argument name="type" xsi:type="string">system</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Core\Model\App">
+        <arguments>
+            <argument name="config" xsi:type="object">moduleConfig</argument>
+        </arguments>
+    </type>
+    <!--  Actual custom di.xml content  -->
+    <!--  For rendering grid in admin  -->
+<!--    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">-->
+<!--        <arguments>-->
+<!--            <argument name="collections" xsi:type="array">-->
+<!--                <item name="faq_questions_grid_data_source">Magebit\Faq\Model\ResourceModel\Question\Grid\Collection</item>-->
+<!--            </argument>-->
+<!--        </arguments>-->
+<!--    </type>-->
+</config>
