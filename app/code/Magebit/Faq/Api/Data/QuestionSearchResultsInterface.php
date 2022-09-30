@@ -12,15 +12,7 @@ interface QuestionSearchResultsInterface extends SearchResultsInterface
     /**
      * Get questions list.
      *
-     * @return \Magebit\Faq\Api\Data\QuestionInterface[]
+     * @return QuestionInterface[]
      */
-    public function getItems();
-
-//    /**
-//     * Set questions list.
-//     *
-//     * @param array $items
-//     * @return $this
-//     */
-//    public function setItems(array $items);
+    public function getItems(): array;
 }

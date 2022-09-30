@@ -2,11 +2,30 @@
 
 namespace Magebit\Faq\Controller\Adminhtml\Question;
 
+use Magebit\Faq\Api\QuestionRepositoryInterface;
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Redirect;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\View\Result\PageFactory;
 
-class Edit extends \Magento\Cms\Controller\Adminhtml\Block implements HttpGetActionInterface
+class Edit extends Action implements HttpGetActionInterface
 {
+    protected PageFactory $resultPageFactory;
+
+    protected QuestionRepositoryInterface $questionRepository;
+
+    public function __construct(
+        Context $context,
+        PageFactory $resultPageFactory,
+        QuestionRepositoryInterface $questionRepository,
+    ) {
+        $this->resultPageFactory = $resultPageFactory;
+        $this->questionRepository = $questionRepository;
+        parent::__construct($context);
+    }
 
     /**
      * Execute action based on request and return result
@@ -16,6 +35,22 @@ class Edit extends \Magento\Cms\Controller\Adminhtml\Block implements HttpGetAct
      */
     public function execute()
     {
-        // TODO: Implement execute() method.
+        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        $resultPage = $this->resultPageFactory->create();
+        $title = __('New Question');
+
+        if ($id = $this->getRequest()->getParam('id')) {
+            try {
+                $this->questionRepository->getById($id);
+            } catch (NoSuchEntityException $e) {
+                $this->messageManager->addErrorMessage($e->getMessage());
+                /** @var Redirect $resultRedirect */
+                $resultRedirect = $this->resultRedirectFactory->create();
+                return $resultRedirect->setPath('*/*/');
+            }
+            $title = __('Edit Question');
+        }
+        $resultPage->getConfig()->getTitle()->prepend($title);
+        return $resultPage;
     }
 }

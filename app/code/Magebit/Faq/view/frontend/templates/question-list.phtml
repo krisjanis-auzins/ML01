@@ -8,5 +8,9 @@ $_questions = $block->getQuestions();
 ?>
 <h3>Frequently Asked Questions</h3>
 <?php foreach ($_questions as $question): ?>
-    <strong><?= $question['question'] ?>: </strong><p><?= $question['answer'] ?></p>
+    <div>
+        <span><?= $question['position']?>. </span>
+        <strong><?= $question['question'] ?>: </strong>
+        <p><?= $question['answer'] ?></p>
+    </div>
 <?php endforeach; ?>

@@ -4,90 +4,106 @@ namespace Magebit\Faq\Model;
 
 use Magebit\Faq\Api\Data\QuestionInterface;
 use Magento\Framework\Model\AbstractModel;
+use Magebit\Faq\Model\ResourceModel\Question as ResourceModel;
 
 class Question extends AbstractModel implements QuestionInterface
 {
+    protected function _construct()
+    {
+        $this->_init(ResourceModel::class);
+    }
+
+    public function getId():? int
+    {
+        return $this->getData(self::QUESTION_ID);
+    }
+
     /**
      * @return string
      */
-    public function getQuestion()
+    public function getQuestion(): string
     {
-        // TODO: Implement getQuestion() method.
+        return $this->getData(self::QUESTION);
     }
 
     /**
      * @param string $question
      * @return mixed
      */
-    public function setQuestion(string $question)
+    public function setQuestion(string $question): self
     {
-        // TODO: Implement setQuestion() method.
+        return $this->setData(self::QUESTION, $question);
     }
 
     /**
      * @return string
      */
-    public function getAnswer()
+    public function getAnswer(): string
     {
-        // TODO: Implement getAnswer() method.
+        return $this->getData(self::ANSWER);
     }
 
     /**
      * @param string $answer
      * @return mixed
      */
-    public function setAnswer(string $answer)
+    public function setAnswer(string $answer): self
     {
-        // TODO: Implement setAnswer() method.
+        return $this->setData(self::ANSWER, $answer);
     }
 
     /**
      * @return int
      */
-    public function getStatus()
+    public function getStatus(): int
     {
-        // TODO: Implement getStatus() method.
+        return $this->getData(self::STATUS);
     }
 
     /**
      * @param int|bool $status
      * @return mixed
      */
-    public function setStatus(bool|int $status)
+    public function setStatus(bool|int $status): self
     {
-        // TODO: Implement setStatus() method.
+        return $this->setData(self::STATUS, $status);
     }
 
     /**
      * @return mixed
      */
-    public function getPosition()
+    public function getPosition(): int
     {
-        // TODO: Implement getPosition() method.
+        return $this->getData(self::POSITION);
     }
 
     /**
      * @param int $position
      * @return mixed
      */
-    public function setPosition(int $position)
+    public function setPosition(int $position): self
     {
-        // TODO: Implement setPosition() method.
+        return $this->setData(self::POSITION, $position);
     }
 
     /**
      * @return mixed
      */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): string
     {
-        // TODO: Implement getUpdatedAt() method.
+        return $this->getData(self::UPDATED_AT);
     }
 
     /**
      * @return mixed
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): string
     {
-        // TODO: Implement getCreatedAt() method.
+        return $this->getData(self::CREATED_AT);
+    }
+
+    public function getAvailableStatuses()
+    {
+        return [self::STATUS_ENABLED => __('Enabled'), self::STATUS_DISABLED => __('Disabled')];
     }
 }

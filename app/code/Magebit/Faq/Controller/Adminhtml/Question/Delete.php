@@ -5,7 +5,7 @@ namespace Magebit\Faq\Controller\Adminhtml\Question;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\ResponseInterface;
 
-class Delete extends \Magento\Cms\Controller\Adminhtml\Block implements HttpPostActionInterface
+class Delete implements HttpPostActionInterface
 {
 
     /**

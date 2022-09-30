@@ -7,70 +7,35 @@ use Magento\Framework\Api\SearchCriteriaBuilder;
 
 interface QuestionInterface
 {
-    const QUESTION_ID = 'id';
-    const QUESTION    = 'question';
-    const ANSWER      = 'answer';
-    const STATUS      = 'status';
-    const POSITION    = 'position';
-    const UPDATED_AT  = 'updated_at';
-    const CREATED_AT  = 'created_at';
+    const QUESTION_ID      = 'id';
+    const QUESTION         = 'question';
+    const ANSWER           = 'answer';
+    const STATUS           = 'status';
+    const POSITION         = 'position';
+    const UPDATED_AT       = 'updated_at';
+    const CREATED_AT       = 'created_at';
+    const STATUS_ENABLED   = '1';
+    const STATUS_DISABLED  = '0';
 
-    /**
-     * @return int
-     */
-    public function getId();
+    public function getId():? int;
 
-    /**
-     * @return string
-     */
-    public function getQuestion();
+    public function getQuestion(): string;
 
-    /**
-     * @param string $question
-     * @return mixed
-     */
-    public function setQuestion(string $question);
+    public function setQuestion(string $question): self;
 
-    /**
-     * @return string
-     */
-    public function getAnswer();
+    public function getAnswer(): string;
 
-    /**
-     * @param string $answer
-     * @return mixed
-     */
-    public function setAnswer(string $answer);
+    public function setAnswer(string $answer): self;
 
-    /**
-     * @return int
-     */
-    public function getStatus();
+    public function getStatus(): int;
 
-    /**
-     * @param int|bool $status
-     * @return mixed
-     */
-    public function setStatus(int|bool $status);
+    public function setStatus(int|bool $status): self;
 
-    /**
-     * @return mixed
-     */
-    public function getPosition();
+    public function getPosition(): int;
 
-    /**
-     * @param int $position
-     * @return mixed
-     */
-    public function setPosition(int $position);
+    public function setPosition(int $position): self;
 
-    /**
-     * @return mixed
-     */
-    public function getUpdatedAt();
+    public function getUpdatedAt(): string;
 
-    /**
-     * @return mixed
-     */
-    public function getCreatedAt();
+    public function getCreatedAt(): string;
 }

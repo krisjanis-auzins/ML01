@@ -2,16 +2,39 @@
 
 namespace Magebit\Faq\Model\Question\Source;
 
-class Status
-{
-    private const DISABLED = 'disabled';
-    private const ENABLED = 'enabled';
-    public function disable () {
+use Magebit\Faq\Model\Question;
+use Magento\Framework\Data\OptionSourceInterface;
 
+class Status implements OptionSourceInterface
+{
+
+    protected Question $question;
+
+    /**
+     * Constructor
+     *
+     * @param Question $question
+     */
+    public function __construct(Question $question)
+    {
+        $this->question = $question;
     }
 
-    public function enable ()
+    /**
+     * Get options
+     *
+     * @return array
+     */
+    public function toOptionArray()
     {
-
+        $availableOptions = $this->question->getAvailableStatuses();
+        $options = [];
+        foreach ($availableOptions as $key => $value) {
+            $options[] = [
+                'label' => $value,
+                'value' => $key,
+            ];
+        }
+        return $options;
     }
 }

@@ -7,10 +7,10 @@ interface QuestionManagementInterface
     /**
      * @return mixed
      */
-    public function disableQuestion();
+    public function disableQuestion(): self;
 
     /**
      * @return mixed
      */
-    public function enableQuestion();
+    public function enableQuestion(): self;
 }

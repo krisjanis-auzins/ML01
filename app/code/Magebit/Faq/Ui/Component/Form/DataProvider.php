@@ -2,20 +2,23 @@
 
 namespace Magebit\Faq\Ui\Component\Form;
 
-use Magento\Framework\Data\CollectionFactory;
-use \Magento\Ui\DataProvider\AbstractDataProvider;
+use Magebit\Faq\Model\Question;
+use Magento\Ui\DataProvider\AbstractDataProvider;
+use Magebit\Faq\Model\ResourceModel\Question\CollectionFactory;
 
 class DataProvider extends AbstractDataProvider
 {
     protected $collection;
 
+    protected array $loadedData = [];
+
     public function __construct(
         $name,
         $primaryFieldName,
         $requestFieldName,
+        CollectionFactory $collectionFactory,
         array $meta = [],
-        array $data = [],
-        CollectionFactory $collectionFactory
+        array $data = []
     ) {
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
         $this->collection = $collectionFactory->create();
@@ -26,10 +29,11 @@ class DataProvider extends AbstractDataProvider
      */
     public function getData(): array
     {
-        $result = [];
-        foreach ($this->collection->getItems() as $item) {
-            $result[$item->getId()]['general'] = $item->getData();
+        $items = $this->collection->getItems();
+        /** @var Question $question */
+        foreach ($items as $question) {
+            $this->loadedData[$question->getId()] = $question->getData();
         }
-        return $this->data;
+        return $this->loadedData;
     }
 }

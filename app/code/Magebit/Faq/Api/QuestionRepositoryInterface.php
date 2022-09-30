@@ -3,37 +3,18 @@
 namespace Magebit\Faq\Api;
 
 use Magebit\Faq\Api\Data\QuestionInterface;
+use Magebit\Faq\Api\Data\QuestionSearchResultsInterface;
 use Magento\Framework\Api\Search\SearchCriteria;
 
 interface QuestionRepositoryInterface
 {
-    /**
-     * @param int $id
-     * @return mixed
-     */
-    public function get(int $id);
+    public function getById(int $id): QuestionInterface;
 
-    /**
-     * @param QuestionInterface $question
-     * @return mixed
-     */
-    public function save(QuestionInterface $question);
+    public function save(QuestionInterface $question): QuestionInterface;
 
-    /**
-     * @param SearchCriteria $searchCriteria
-     * @return array
-     */
-    public function getList(SearchCriteria $searchCriteria): array;
+    public function getList(SearchCriteria $searchCriteria): QuestionSearchResultsInterface;
 
-    /**
-     * @param QuestionInterface $question
-     * @return mixed
-     */
-    public function delete(QuestionInterface $question);
+    public function delete(QuestionInterface $question): bool;
 
-    /**
-     * @param int $id
-     * @return mixed
-     */
-    public function deleteById(int $id);
+    public function deleteById(int $id): bool;
 }
