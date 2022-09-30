@@ -37,6 +37,7 @@ class Edit extends Action implements HttpGetActionInterface
     {
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
+        $resultPage->setActiveMenu('Magebit_Faq::question');
         $title = __('New Question');
 
         if ($id = $this->getRequest()->getParam('id')) {
@@ -50,6 +51,7 @@ class Edit extends Action implements HttpGetActionInterface
             }
             $title = __('Edit Question');
         }
+
         $resultPage->getConfig()->getTitle()->prepend($title);
         return $resultPage;
     }

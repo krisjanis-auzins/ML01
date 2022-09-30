@@ -12,7 +12,7 @@ use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\Exception\LocalizedException;
 
 /**
- * Save CMS block action.
+ * Save Question action.
  */
 class Save extends Action implements HttpPostActionInterface
 {
@@ -78,8 +78,8 @@ class Save extends Action implements HttpPostActionInterface
     public function processReturn(
         Question $model,
         array $data,
-        Redirect $resultRedirect)
-    {
+        Redirect $resultRedirect
+    ) {
         $redirectType = $data['back'] ?? 'close';
 
         if ($redirectType === 'continue') {

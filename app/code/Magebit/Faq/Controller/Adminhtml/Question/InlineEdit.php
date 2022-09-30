@@ -46,7 +46,7 @@ class InlineEdit extends Action
             } else {
                 foreach (array_keys($postItems) as $questionId) {
                     /** @var Question $question */
-                    $question = $this->questionRepository->get($questionId);
+                    $question = $this->questionRepository->getById($questionId);
                     try {
                         $question->setData(array_merge($question->getData(), $postItems[$questionId]));
                         $this->questionRepository->save($question);
@@ -68,7 +68,7 @@ class InlineEdit extends Action
     }
 
     /**
-     * Add question title (ID?) to error message
+     * Add question ID to error message
      *
      * @param QuestionInterface $question
      * @param $errorText
@@ -76,6 +76,6 @@ class InlineEdit extends Action
      */
     protected function getErrorWithQuestionId(QuestionInterface $question, $errorText): string
     {
-        return '[Block ID: ' . $question->getId() . '] ' . $errorText;
+        return '[Question ID: ' . $question->getId() . '] ' . $errorText;
     }
 }

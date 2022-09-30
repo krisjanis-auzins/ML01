@@ -67,7 +67,7 @@
                     <item name="config" xsi:type="array">
                         <item name="type" xsi:type="string">enable</item>
                         <item name="label" xsi:type="string" translate="true">Enable</item>
-                        <item name="url" xsi:type="url" path="magebit_faq/question/massEnable"/>
+                        <item name="url" xsi:type="url" path="faq/question/massEnable"/>
                         <item name="confirm" xsi:type="array">
                             <item name="title" xsi:type="string" translate="true">Enable items</item>
                             <item name="message" xsi:type="string" translate="true">Are you sure you want to enable selected items?</item>
@@ -80,7 +80,7 @@
                     <item name="config" xsi:type="array">
                         <item name="type" xsi:type="string">disable</item>
                         <item name="label" xsi:type="string" translate="true">Disable</item>
-                        <item name="url" xsi:type="url" path="magebit_faq/question/massDisable"/>
+                        <item name="url" xsi:type="url" path="faq/question/massDisable"/>
                         <item name="confirm" xsi:type="array">
                             <item name="title" xsi:type="string" translate="true">Enable items</item>
                             <item name="message" xsi:type="string" translate="true">Are you sure you want to disable selected items?</item>
@@ -93,7 +93,7 @@
                     <item name="config" xsi:type="array">
                         <item name="type" xsi:type="string">delete</item>
                         <item name="label" xsi:type="string" translate="true">Delete</item>
-                        <item name="url" xsi:type="url" path="magebit_faq/question/massDelete"/>
+                        <item name="url" xsi:type="url" path="faq/question/massDelete"/>
                         <item name="confirm" xsi:type="array">
                             <item name="title" xsi:type="string" translate="true">Delete items</item>
                             <item name="message" xsi:type="string" translate="true">Are you sure you want to delete selected items?</item>

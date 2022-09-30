@@ -10,8 +10,6 @@ use Magebit\Faq\Model\ResourceModel\Question\CollectionFactory as QuestionCollec
 use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Api\Search\SearchCriteria;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
-use Magento\Framework\App\ObjectManager;
-use Magento\Framework\EntityManager\HydratorInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -33,8 +31,6 @@ class QuestionRepository implements QuestionRepositoryInterface
 
     protected Data\QuestionInterfaceFactory $dataQuestionFactory;
 
-    private HydratorInterface $hydrator;
-
     private CollectionProcessorInterface $collectionProcessor;
 
     public function __construct(
@@ -45,7 +41,7 @@ class QuestionRepository implements QuestionRepositoryInterface
         Data\QuestionSearchResultsInterfaceFactory $searchResultsFactory,
         DataObjectHelper $dataObjectHelper,
         DataObjectProcessor $dataObjectProcessor,
-        ?HydratorInterface $hydrator = null
+        CollectionProcessorInterface $collectionProcessor
     ) {
         $this->resource = $resource;
         $this->questionFactory = $questionFactory;
@@ -54,7 +50,7 @@ class QuestionRepository implements QuestionRepositoryInterface
         $this->dataObjectHelper = $dataObjectHelper;
         $this->dataQuestionFactory = $dataQuestionFactory;
         $this->dataObjectProcessor = $dataObjectProcessor;
-        $this->hydrator = $hydrator ?? ObjectManager::getInstance()->get(HydratorInterface::class);
+        $this->collectionProcessor = $collectionProcessor;
     }
 
     /**
@@ -76,16 +72,11 @@ class QuestionRepository implements QuestionRepositoryInterface
      */
     public function save(QuestionInterface $question): QuestionInterface
     {
-//        if($question->getId() && $question instanceof Question && !$question->getOrigData()) {
-//            $question = $this->hydrator->hydrate($this->getById($question->getId()), $this->hydrator->extract($question));
-//        }
-
         try {
             $this->resource->save($question);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(__($exception->getMessage()));
         }
-
         return $question;
     }
 

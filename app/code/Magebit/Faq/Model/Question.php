@@ -102,7 +102,10 @@ class Question extends AbstractModel implements QuestionInterface
         return $this->getData(self::CREATED_AT);
     }
 
-    public function getAvailableStatuses()
+    /**
+     * @return array
+     */
+    public function getAvailableStatuses(): array
     {
         return [self::STATUS_ENABLED => __('Enabled'), self::STATUS_DISABLED => __('Disabled')];
     }

@@ -2,15 +2,17 @@
 
 namespace Magebit\Faq\Api;
 
+use Magebit\Faq\Api\Data\QuestionInterface;
+
 interface QuestionManagementInterface
 {
     /**
      * @return mixed
      */
-    public function disableQuestion(): self;
+    public function disableQuestion(QuestionInterface $question);
 
     /**
      * @return mixed
      */
-    public function enableQuestion(): self;
+    public function enableQuestion(QuestionInterface $question);
 }
