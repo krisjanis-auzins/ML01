@@ -7,12 +7,14 @@ use Magebit\Faq\Api\Data\QuestionInterface;
 interface QuestionManagementInterface
 {
     /**
-     * @return mixed
+     * @param QuestionInterface $question
+     * @return QuestionInterface
      */
-    public function disableQuestion(QuestionInterface $question);
+    public function disableQuestion(QuestionInterface $question): QuestionInterface;
 
     /**
-     * @return mixed
+     * @param QuestionInterface $question
+     * @return QuestionInterface
      */
-    public function enableQuestion(QuestionInterface $question);
+    public function enableQuestion(QuestionInterface $question): QuestionInterface;
 }

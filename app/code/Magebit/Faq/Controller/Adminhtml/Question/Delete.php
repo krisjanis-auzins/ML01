@@ -3,19 +3,24 @@
 namespace Magebit\Faq\Controller\Adminhtml\Question;
 
 use Magebit\Faq\Api\QuestionRepositoryInterface;
-use Magebit\Faq\Model\Question;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
-use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\Controller\ResultInterface;
 
 class Delete extends Action implements HttpPostActionInterface
 {
+    /**
+     * @var QuestionRepositoryInterface
+     */
     private QuestionRepositoryInterface $questionRepository;
 
+    /**
+     * @param Context $context
+     * @param QuestionRepositoryInterface $questionRepository
+     */
     public function __construct(
         Context $context,
-        Question $question,
         QuestionRepositoryInterface $questionRepository
     ) {
         $this->questionRepository = $questionRepository;
@@ -23,12 +28,11 @@ class Delete extends Action implements HttpPostActionInterface
     }
 
     /**
-     * Execute action based on request and return result
+     * Deletes question by ID,
      *
-     * @return \Magento\Framework\Controller\ResultInterface|ResponseInterface
-     * @throws \Magento\Framework\Exception\NotFoundException
+     * @return ResultInterface
      */
-    public function execute()
+    public function execute(): ResultInterface
     {
         $resultRedirect = $this->resultRedirectFactory->create();
         $id = $this->getRequest()->getParam('id');
@@ -41,7 +45,7 @@ class Delete extends Action implements HttpPostActionInterface
                 $this->messageManager->addErrorMessage($e->getMessage());
             }
         }
-        $this->messageManager->addErrorMessage(__('Cannot find question to delete.'));
+        $this->messageManager->addErrorMessage(__('Cannot find the question to delete.'));
         return  $resultRedirect->setPath('*/*/');
 
     }

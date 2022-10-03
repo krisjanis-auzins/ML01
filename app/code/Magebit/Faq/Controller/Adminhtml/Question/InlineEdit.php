@@ -4,18 +4,29 @@ namespace Magebit\Faq\Controller\Adminhtml\Question;
 
 use Magebit\Faq\Model\Question;
 use Magento\Backend\App\Action;
-use Magento\Framework\App\ResponseInterface;
 use Magento\Backend\App\Action\Context;
 use Magebit\Faq\Api\QuestionRepositoryInterface as QuestionRepository;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magebit\Faq\Api\Data\QuestionInterface;
+use Magento\Framework\Controller\ResultInterface;
 
 class InlineEdit extends Action
 {
+    /**
+     * @var QuestionRepository
+     */
     protected QuestionRepository $questionRepository;
 
+    /**
+     * @var JsonFactory
+     */
     protected JsonFactory $jsonFactory;
 
+    /**
+     * @param Context $context
+     * @param QuestionRepository $questionRepository
+     * @param JsonFactory $jsonFactory
+     */
     public function __construct(
         Context $context,
         QuestionRepository $questionRepository,
@@ -27,10 +38,9 @@ class InlineEdit extends Action
     }
 
     /**
-     * Execute action based on request and return result
+     * Save inline edits
      *
-     * @return \Magento\Framework\Controller\ResultInterface|ResponseInterface
-     * @throws \Magento\Framework\Exception\NotFoundException
+     * @return ResultInterface
      */
     public function execute()
     {

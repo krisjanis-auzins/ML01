@@ -3,15 +3,25 @@
 namespace Magebit\Faq\Ui\Component\Form;
 
 use Magebit\Faq\Model\Question;
+use Magebit\Faq\Model\ResourceModel\Question\Collection;
 use Magento\Ui\DataProvider\AbstractDataProvider;
 use Magebit\Faq\Model\ResourceModel\Question\CollectionFactory;
 
 class DataProvider extends AbstractDataProvider
 {
+    /**
+     * @var Collection
+     */
     protected $collection;
 
-    protected array $loadedData = [];
-
+    /**
+     * @param $name
+     * @param $primaryFieldName
+     * @param $requestFieldName
+     * @param CollectionFactory $collectionFactory
+     * @param array $meta
+     * @param array $data
+     */
     public function __construct(
         $name,
         $primaryFieldName,
@@ -25,15 +35,13 @@ class DataProvider extends AbstractDataProvider
     }
 
     /**
+     * Gets question data for edit form
+     *
      * @return array
      */
     public function getData(): array
     {
-        $items = $this->collection->getItems();
-        /** @var Question $question */
-        foreach ($items as $question) {
-            $this->loadedData[$question->getId()] = $question->getData();
-        }
-        return $this->loadedData;
+        $question = $this->collection->getFirstItem();
+        return  [$question->getId() => $question->getData()];
     }
 }

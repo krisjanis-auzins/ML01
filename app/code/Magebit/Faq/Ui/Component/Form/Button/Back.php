@@ -28,16 +28,4 @@ class Back extends Button implements ButtonProviderInterface
     {
         return $this->getUrl('*/*/');
     }
-
-    /**
-     * Generate url by route and parameters
-     *
-     * @param   string $route
-     * @param   array $params
-     * @return  string
-     */
-    public function getUrl(string $route = '', array $params = []): string
-    {
-        return $this->context->getUrlBuilder()->getUrl($route, $params);
-    }
 }

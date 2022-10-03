@@ -5,18 +5,28 @@ namespace Magebit\Faq\Controller\Adminhtml\Question;
 use Magebit\Faq\Api\QuestionRepositoryInterface;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Page;
 use Magento\Backend\Model\View\Result\Redirect;
 use Magento\Framework\App\Action\HttpGetActionInterface;
-use Magento\Framework\App\ResponseInterface;
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Result\PageFactory;
 
 class Edit extends Action implements HttpGetActionInterface
 {
+    /**
+     * @var PageFactory
+     */
     protected PageFactory $resultPageFactory;
 
+    /**
+     * @var QuestionRepositoryInterface
+     */
     protected QuestionRepositoryInterface $questionRepository;
 
+    /**
+     * @param Context $context
+     * @param PageFactory $resultPageFactory
+     * @param QuestionRepositoryInterface $questionRepository
+     */
     public function __construct(
         Context $context,
         PageFactory $resultPageFactory,
@@ -28,14 +38,11 @@ class Edit extends Action implements HttpGetActionInterface
     }
 
     /**
-     * Execute action based on request and return result
-     *
-     * @return \Magento\Framework\Controller\ResultInterface|ResponseInterface
-     * @throws \Magento\Framework\Exception\NotFoundException
+     * @return Page|Redirect
      */
     public function execute()
     {
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        /** @var Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('Magebit_Faq::question');
         $title = __('New Question');
@@ -43,7 +50,7 @@ class Edit extends Action implements HttpGetActionInterface
         if ($id = $this->getRequest()->getParam('id')) {
             try {
                 $this->questionRepository->getById($id);
-            } catch (NoSuchEntityException $e) {
+            } catch (\Exception $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
                 /** @var Redirect $resultRedirect */
                 $resultRedirect = $this->resultRedirectFactory->create();

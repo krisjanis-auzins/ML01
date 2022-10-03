@@ -8,11 +8,17 @@ use Magebit\Faq\Model\ResourceModel\Question as ResourceModel;
 
 class Question extends AbstractModel implements QuestionInterface
 {
+    /**
+     * @return void
+     */
     protected function _construct()
     {
         $this->_init(ResourceModel::class);
     }
 
+    /**
+     * @return int|null
+     */
     public function getId():? int
     {
         return $this->getData(self::QUESTION_ID);

@@ -4,19 +4,43 @@ namespace Magebit\Faq\Model;
 
 use Magebit\Faq\Api\Data\QuestionInterface;
 use Magebit\Faq\Api\QuestionManagementInterface;
+use Magebit\Faq\Api\QuestionRepositoryInterface;
 
 /**
  * Class responsible for question status management
  */
 class QuestionManagement implements QuestionManagementInterface
 {
-    public function enableQuestion(QuestionInterface $question)
+    /**
+     * @var QuestionRepositoryInterface
+     */
+    protected QuestionRepositoryInterface $questionRepository;
+
+    /**
+     * @param QuestionRepositoryInterface $questionRepository
+     */
+    public function __construct(QuestionRepositoryInterface $questionRepository)
     {
-        return $question->setStatus($question::STATUS_ENABLED);
+        $this->questionRepository = $questionRepository;
     }
 
-    public function disableQuestion(QuestionInterface $question)
+    /**
+     * @param QuestionInterface $question
+     * @return QuestionInterface
+     */
+    public function enableQuestion(QuestionInterface $question): QuestionInterface
     {
-        return $question->setStatus($question::STATUS_DISABLED);
+        $question->setStatus($question::STATUS_ENABLED);
+        return $this->questionRepository->save($question);
+    }
+
+    /**
+     * @param QuestionInterface $question
+     * @return QuestionInterface
+     */
+    public function disableQuestion(QuestionInterface $question): QuestionInterface
+    {
+        $question->setStatus($question::STATUS_DISABLED);
+        return $this->questionRepository->save($question);
     }
 }

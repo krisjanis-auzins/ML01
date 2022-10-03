@@ -26,7 +26,7 @@
             <updateUrl path="mui/index/render"/>
         </settings>
         <aclResource>Magebit_Faq::question</aclResource>
-        <dataProvider class="Magebit\Faq\Ui\Component\Listing\DataProvider" name="faq_question_listing_data_source">
+        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="faq_question_listing_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
                 <primaryFieldName>id</primaryFieldName>
@@ -82,7 +82,7 @@
                         <item name="label" xsi:type="string" translate="true">Disable</item>
                         <item name="url" xsi:type="url" path="faq/question/massDisable"/>
                         <item name="confirm" xsi:type="array">
-                            <item name="title" xsi:type="string" translate="true">Enable items</item>
+                            <item name="title" xsi:type="string" translate="true">Disable items</item>
                             <item name="message" xsi:type="string" translate="true">Are you sure you want to disable selected items?</item>
                         </item>
                     </item>
@@ -205,12 +205,11 @@
         <actionsColumn name="actions" class="Magebit\Faq\Ui\Component\Listing\Column\QuestionActions" sortOrder="200">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="resizeEnabled" xsi:type="boolean">false</item>
+                    <item name="resizeEnabled" xsi:type="boolean">true</item>
                     <item name="resizeDefaultWidth" xsi:type="string">107</item>
                     <item name="indexField" xsi:type="string">id</item>
                 </item>
             </argument>
-            <argument name="editUrl" xsi:type="string">faq/question/edit</argument>
         </actionsColumn>
     </columns>
 </listing>

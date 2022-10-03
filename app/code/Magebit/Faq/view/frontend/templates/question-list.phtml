@@ -1,16 +1,32 @@
 <?php
 /**
- * Product additional attributes template
+ * Frequently asked questions template
  *
  * @var $block \Magebit\Faq\Block\QuestionList
  */
 $_questions = $block->getQuestions();
 ?>
-<h3>Frequently Asked Questions</h3>
-<?php foreach ($_questions as $question): ?>
-    <div>
-        <span><?= $question['position']?>. </span>
-        <strong><?= $question['question'] ?>: </strong>
-        <p><?= $question['answer'] ?></p>
+<h1><?= __('Frequently Asked Questions') ?></h1>
+<?php if ($_questions): ?>
+    <div id="faq_accordion" data-mage-init='{
+        "accordion":{
+            "active": [0],
+            "collapsible": true,
+            "openedState": "active",
+            "multipleCollapsible": false,
+            "openOnFocus": true
+        }}'>
+        <?php foreach ($_questions as $question): ?>
+            <div data-role="collapsible">
+                <div data-role="trigger">
+                    <div class="title_container">
+                        <strong><?= $question->getQuestion(); ?></strong>
+                    </div>
+                </div>
+            </div>
+            <div class="content" data-role="content"><?= $question->getAnswer(); ?></div>
+        <?php endforeach; ?>
     </div>
-<?php endforeach; ?>
+<?php else: ?>
+    <p><?= __('No questions to display')?></p>
+<?php endif; ?>

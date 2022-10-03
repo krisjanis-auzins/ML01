@@ -9,17 +9,30 @@ use Magento\Backend\App\Action;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\Result\Redirect;
+use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NotFoundException;
 
 /**
  * Save Question action.
  */
 class Save extends Action implements HttpPostActionInterface
 {
+    /**
+     * @var QuestionFactory
+     */
     private QuestionFactory $questionFactory;
 
+    /**
+     * @var QuestionRepositoryInterface
+     */
     private QuestionRepositoryInterface $questionRepository;
 
+    /**
+     * @param Action\Context $context
+     * @param QuestionFactory $questionFactory
+     * @param QuestionRepositoryInterface $questionRepository
+     */
     public function __construct(
         Action\Context $context,
         QuestionFactory $questionFactory,
@@ -33,8 +46,9 @@ class Save extends Action implements HttpPostActionInterface
     /**
      * Execute action based on request and return result
      *
-     * @return \Magento\Framework\Controller\ResultInterface|ResponseInterface
-     * @throws \Magento\Framework\Exception\NotFoundException
+     * @return ResultInterface|ResponseInterface
+     * @throws NotFoundException
+     * @throws LocalizedException
      */
     public function execute()
     {
@@ -52,7 +66,7 @@ class Save extends Action implements HttpPostActionInterface
             if ($id) {
                 try {
                     $model = $this->questionRepository->getById($id);
-                } catch (LocalizedException $e) {
+                } catch (\Exception $e) {
                     $this->messageManager->addErrorMessage(__('This question no longer exists.'));
                     return $resultRedirect->setPath('*/*/');
                 }
@@ -67,6 +81,7 @@ class Save extends Action implements HttpPostActionInterface
                 return $this->processReturn($model, $data, $resultRedirect);
             } catch (LocalizedException $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
+                throw new $e;
             } catch (\Exception $e) {
                 $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the question.'));
             }
@@ -75,11 +90,19 @@ class Save extends Action implements HttpPostActionInterface
         return $resultRedirect->setPath('*/*/');
     }
 
+
+    /**
+     * @param Question $model
+     * @param array $data
+     * @param Redirect $resultRedirect
+     * @return Redirect
+     */
     public function processReturn(
         Question $model,
         array $data,
         Redirect $resultRedirect
-    ) {
+    ): Redirect
+    {
         $redirectType = $data['back'] ?? 'close';
 
         if ($redirectType === 'continue') {

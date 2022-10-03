@@ -2,14 +2,20 @@
 
 namespace Magebit\Faq\Ui\Component\Form\Button;
 
+use Exception;
 use Magento\Backend\Block\Widget\Context;
 use Magebit\Faq\Api\QuestionRepositoryInterface;
-use Magento\Framework\Exception\NoSuchEntityException;
 
 class Button
 {
+    /**
+     * @var Context
+     */
     protected Context $context;
 
+    /**
+     * @var QuestionRepositoryInterface
+     */
     protected QuestionRepositoryInterface $questionRepository;
 
     /**
@@ -24,6 +30,10 @@ class Button
         $this->questionRepository = $questionRepository;
     }
 
+    /**
+     * @return int|null
+     * @throws Exception
+     */
     public function getQuestionId(): ?int
     {
         if ($this->context->getRequest()->getParam('id')) {
@@ -31,7 +41,8 @@ class Button
                 return $this->questionRepository->getById(
                     $this->context->getRequest()->getParam('id')
                 )->getId();
-            } catch (NoSuchEntityException $e) {
+            } catch (Exception $e) {
+                throw new $e;
             }
         }
         return null;

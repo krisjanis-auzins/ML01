@@ -2,12 +2,14 @@
 
 namespace Magebit\Faq\Ui\Component\Form\Button;
 
+use Exception;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 class Delete extends Button implements ButtonProviderInterface
 {
     /**
-     * @inheritDoc
+     * @return array
+     * @throws Exception
      */
     public function getButtonData(): array
     {
@@ -29,6 +31,7 @@ class Delete extends Button implements ButtonProviderInterface
      * URL to send delete requests to.
      *
      * @return string
+     * @throws Exception
      */
     public function getDeleteUrl(): string
     {

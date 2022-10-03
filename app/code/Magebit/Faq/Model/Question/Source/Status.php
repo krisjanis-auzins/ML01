@@ -7,12 +7,12 @@ use Magento\Framework\Data\OptionSourceInterface;
 
 class Status implements OptionSourceInterface
 {
-
+    /**
+     * @var Question
+     */
     protected Question $question;
 
     /**
-     * Constructor
-     *
      * @param Question $question
      */
     public function __construct(Question $question)
@@ -25,7 +25,7 @@ class Status implements OptionSourceInterface
      *
      * @return array
      */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         $availableOptions = $this->question->getAvailableStatuses();
         $options = [];

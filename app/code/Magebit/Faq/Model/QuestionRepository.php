@@ -7,53 +7,63 @@ use Magebit\Faq\Api\Data\QuestionInterface;
 use Magebit\Faq\Api\QuestionRepositoryInterface;
 use Magebit\Faq\Model\ResourceModel\Question as ResourceQuestion;
 use Magebit\Faq\Model\ResourceModel\Question\CollectionFactory as QuestionCollectionFactory;
-use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Api\Search\SearchCriteria;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Reflection\DataObjectProcessor;
 
 class QuestionRepository implements QuestionRepositoryInterface
 {
+    /**
+     * @var ResourceQuestion
+     */
     protected ResourceQuestion $resource;
 
+    /**
+     * @var QuestionFactory
+     */
     protected QuestionFactory $questionFactory;
 
+    /**
+     * @var QuestionCollectionFactory
+     */
     protected QuestionCollectionFactory $questionCollectionFactory;
 
+    /**
+     * @var Data\QuestionSearchResultsInterfaceFactory
+     */
     protected Data\QuestionSearchResultsInterfaceFactory $searchResultsFactory;
 
-    protected DataObjectHelper $dataObjectHelper;
-
-    protected  DataObjectProcessor $dataObjectProcessor;
-
-    protected Data\QuestionInterfaceFactory $dataQuestionFactory;
-
+    /**
+     * @var CollectionProcessorInterface
+     */
     private CollectionProcessorInterface $collectionProcessor;
 
+    /**
+     * @param ResourceQuestion $resource
+     * @param QuestionFactory $questionFactory
+     * @param QuestionCollectionFactory $questionCollectionFactory
+     * @param Data\QuestionSearchResultsInterfaceFactory $searchResultsFactory
+     * @param CollectionProcessorInterface $collectionProcessor
+     */
     public function __construct(
         ResourceQuestion $resource,
         QuestionFactory $questionFactory,
-        Data\QuestionInterfaceFactory $dataQuestionFactory,
         QuestionCollectionFactory $questionCollectionFactory,
         Data\QuestionSearchResultsInterfaceFactory $searchResultsFactory,
-        DataObjectHelper $dataObjectHelper,
-        DataObjectProcessor $dataObjectProcessor,
         CollectionProcessorInterface $collectionProcessor
     ) {
         $this->resource = $resource;
         $this->questionFactory = $questionFactory;
         $this->questionCollectionFactory = $questionCollectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
-        $this->dataObjectHelper = $dataObjectHelper;
-        $this->dataQuestionFactory = $dataQuestionFactory;
-        $this->dataObjectProcessor = $dataObjectProcessor;
         $this->collectionProcessor = $collectionProcessor;
     }
 
     /**
+     * @param int $id
+     * @return QuestionInterface
      * @throws NoSuchEntityException
      */
     public function getById(int $id): QuestionInterface
@@ -67,7 +77,8 @@ class QuestionRepository implements QuestionRepositoryInterface
     }
 
     /**
-     * @throws NoSuchEntityException
+     * @param QuestionInterface $question
+     * @return QuestionInterface
      * @throws CouldNotSaveException
      */
     public function save(QuestionInterface $question): QuestionInterface
@@ -80,6 +91,10 @@ class QuestionRepository implements QuestionRepositoryInterface
         return $question;
     }
 
+    /**
+     * @param SearchCriteria $searchCriteria
+     * @return Data\QuestionSearchResultsInterface
+     */
     public function getList(SearchCriteria $searchCriteria): Data\QuestionSearchResultsInterface
     {
         $collection = $this->questionCollectionFactory->create();
@@ -92,6 +107,8 @@ class QuestionRepository implements QuestionRepositoryInterface
     }
 
     /**
+     * @param QuestionInterface $question
+     * @return bool
      * @throws CouldNotDeleteException
      */
     public function delete(QuestionInterface $question): bool
@@ -105,6 +122,8 @@ class QuestionRepository implements QuestionRepositoryInterface
     }
 
     /**
+     * @param int $id
+     * @return bool
      * @throws CouldNotDeleteException
      * @throws NoSuchEntityException
      */

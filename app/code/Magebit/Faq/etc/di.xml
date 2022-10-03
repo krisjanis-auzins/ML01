@@ -1,57 +1,12 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <!--  Are these needed? Do not understand the purpose  -->
-    <virtualType name="moduleConfig" type="Magento\Core\Model\Config">
-        <arguments>
-            <argument name="type" xsi:type="string">system</argument>
-        </arguments>
-    </virtualType>
+    <preference for="Magebit\Faq\Api\Data\QuestionInterface" type="Magebit\Faq\Model\Question"/>
+    <preference for="Magebit\Faq\Api\QuestionManagementInterface" type="Magebit\Faq\Model\QuestionManagement"/>
     <preference for="Magebit\Faq\Api\QuestionRepositoryInterface" type="Magebit\Faq\Model\QuestionRepository"/>
-    <!--  For Admin Grid Listing   /-->
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
                 <item name="faq_question_listing_data_source" xsi:type="string">Magebit\Faq\Model\ResourceModel\Question\Grid\Collection</item>
-            </argument>
-        </arguments>
-    </type>
-    <!--    For Admin Form-->
-    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
-        <arguments>
-            <argument name="collections" xsi:type="array">
-                <item name="faq_question_form_data_source" xsi:type="string">Magebit\Faq\Model\ResourceModel\Question\Grid\Collection</item>
-            </argument>
-        </arguments>
-    </type>
-    <type name="Magebit\Faq\Model\ResourceModel\Question\Grid\Collection">
-        <arguments>
-            <argument name="mainTable" xsi:type="string">faq_entity</argument>
-            <argument name="eventPrefix" xsi:type="string">faq_question_grid_collection</argument>
-            <argument name="eventObject" xsi:type="string">question_grid_collection</argument>
-            <argument name="resourceModel" xsi:type="string">Magebit\Faq\Model\ResourceModel\Question</argument>
-        </arguments>
-    </type>
-    <type name="Magento\Framework\Model\Entity\RepositoryFactory">
-        <arguments>
-            <argument name="entities" xsi:type="array">
-                <item name="Magebit\Faq\Api\Data\QuestionInterface" xsi:type="string">Magebit\Faq\Api\QuestionRepositoryInterface</item>
-            </argument>
-        </arguments>
-    </type>
-    <type name="Magento\Framework\EntityManager\MetadataPool">
-        <arguments>
-            <argument name="metadata" xsi:type="array">
-                <item name="Magebit\Faq\Api\Data\QuestionInterface" xsi:type="array">
-                    <item name="entityTableName" xsi:type="string">faq_question</item>
-                    <item name="identifierField" xsi:type="string">id</item>
-                </item>
-            </argument>
-        </arguments>
-    </type>
-    <type name="Magento\Framework\EntityManager\HydratorPool">
-        <arguments>
-            <argument name="hydrators" xsi:type="array">
-                <item name="Magebit\Faq\Api\Data\QuestionInterface" xsi:type="string">Magento\Framework\EntityManager\AbstractModelHydrator</item>
             </argument>
         </arguments>
     </type>

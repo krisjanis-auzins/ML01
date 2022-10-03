@@ -3,12 +3,10 @@
 namespace Magebit\Faq\Controller\Adminhtml\Question;
 
 use Magebit\Faq\Model\QuestionManagement;
-use Magebit\Faq\Model\QuestionRepository;
 use Magebit\Faq\Model\ResourceModel\Question\CollectionFactory;
 use Magento\Backend\App\Action;
 use Magento\Backend\Model\View\Result\Redirect;
 use Magento\Framework\App\Action\HttpPostActionInterface;
-use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Exception\LocalizedException;
@@ -19,33 +17,41 @@ use Magento\Ui\Component\MassAction\Filter;
  */
 class MassEnable extends Action implements HttpPostActionInterface
 {
+    /**
+     * @var Filter
+     */
     protected Filter $filter;
 
+    /**
+     * @var CollectionFactory
+     */
     protected CollectionFactory $collectionFactory;
 
+    /**
+     * @var QuestionManagement
+     */
     protected QuestionManagement $questionManagement;
 
-    protected QuestionRepository $questionRepository;
-
+    /**
+     * @param Context $context
+     * @param Filter $filter
+     * @param CollectionFactory $collectionFactory
+     * @param QuestionManagement $questionManagement
+     */
     public function __construct(
         Context $context,
         Filter $filter,
         CollectionFactory $collectionFactory,
         QuestionManagement $questionManagement,
-        QuestionRepository $questionRepository
     ) {
         $this->filter = $filter;
         $this->collectionFactory = $collectionFactory;
         $this->questionManagement = $questionManagement;
-        $this->questionRepository = $questionRepository;
         parent::__construct($context);
     }
 
     /**
-     * Execute action based on request and return result
-     *
-     * @return \Magento\Framework\Controller\ResultInterface|ResponseInterface
-     * @throws \Magento\Framework\Exception\NotFoundException
+     * @return Redirect
      * @throws LocalizedException
      */
     public function execute()
@@ -54,8 +60,11 @@ class MassEnable extends Action implements HttpPostActionInterface
         $collectionSize = $collection->getSize();
 
         foreach ($collection as $question) {
-            $this->questionManagement->enableQuestion($question);
-            $this->questionRepository->save($question);
+            try {
+                $this->questionManagement->enableQuestion($question);
+            } catch (\Exception $e) {
+                $this->messageManager->addErrorMessage($e->getMessage());
+            }
         }
 
         $this->messageManager->addSuccessMessage(__('A total of %1 selected question(s) have been enabled.', $collectionSize));

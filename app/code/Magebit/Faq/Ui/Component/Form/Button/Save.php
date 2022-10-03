@@ -7,7 +7,6 @@ use Magento\Ui\Component\Control\Container;
 
 class Save extends Button implements ButtonProviderInterface
 {
-
     /**
      * Retrieve button-specified settings
      *

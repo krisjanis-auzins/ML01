@@ -8,17 +8,25 @@ use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Backend\Model\View\Result\Redirect;
 use Magento\Framework\App\Action\HttpPostActionInterface;
-use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Ui\Component\MassAction\Filter;
 
 class MassDelete extends Action implements HttpPostActionInterface
 {
+    /**
+     * @var Filter
+     */
     protected Filter $filter;
 
+    /**
+     * @var CollectionFactory
+     */
     protected CollectionFactory $collectionFactory;
 
+    /**
+     * @var QuestionRepository
+     */
     protected QuestionRepository $questionRepository;
 
     public function __construct(
@@ -34,19 +42,20 @@ class MassDelete extends Action implements HttpPostActionInterface
     }
 
     /**
-     * Execute action based on request and return result
-     *
-     * @return \Magento\Framework\Controller\ResultInterface|ResponseInterface
-     * @throws \Magento\Framework\Exception\NotFoundException
+     * @return Redirect
      * @throws LocalizedException
      */
-    public function execute()
+    public function execute(): Redirect
     {
         $collection = $this->filter->getCollection($this->collectionFactory->create());
         $collectionSize = $collection->getSize();
 
         foreach ($collection as $question) {
-            $this->questionRepository->delete($question);
+            try {
+                $this->questionRepository->delete($question);
+            } catch (\Exception $e) {
+                $this->messageManager->addErrorMessage($e->getMessage());
+            }
         }
 
         $this->messageManager->addSuccessMessage(__('A total of %1 record(s) have been deleted.', $collectionSize));
