@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magebit
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="faq_entity" resource="default" engine="innodb" comment="FAQ Section Data Table">
+        <column xsi:type="int" name="id" nullable="false" identity="true" unsigned="true" comment="FAQ entity ID"/>
+        <column xsi:type="text" name="question" nullable="false" comment="FAQ Question"/>
+        <column xsi:type="text" name="answer" nullable="false" comment="FAQ Answer"/>
+        <column xsi:type="smallint" name="status" default="0" nullable="false" comment="FAQ Entity Status"/>
+        <column xsi:type="int" name="position" default="0" nullable="false" comment="FAQ Entity Position"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" default="CURRENT_TIMESTAMP"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" default="CURRENT_TIMESTAMP"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+    </table>
+</schema>
